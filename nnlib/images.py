@@ -1,6 +1,7 @@
 import cv2 
 import matplotlib.pyplot as plt 
-  
+import numpy as np
+
 def read_image(filename, grayscale=False, resize=None, plot=True, rescale_intensity=True):
     """ Read an image file from its path
     :type filename: string
@@ -39,3 +40,41 @@ def read_image(filename, grayscale=False, resize=None, plot=True, rescale_intens
     
     return img
 
+
+def categorize(model, categories, element, true_label=""):
+    """ Plot an image and the probabilities of the possible categories
+    :type model: NN
+    :param model: a neural network model, retunring a probability vector
+
+    :type categories: [string]
+    :param categories: names for the categories
+
+    :type element: numpy tensor
+    :param element: the input for the NN
+
+    :type true_label: string
+    :param true_label: the true label, if known
+    """
+    output = model(np.array([element])).numpy().reshape((len(categories), ))
+    prediction = categories[np.argmax(output)]
+
+    # plot the image
+    plt.figure(figsize=(6,3))
+    plt.subplot(1,2,1)
+
+    plt.imshow(element, cmap=plt.cm.get_cmap("gray"))
+    plt.xlabel("{} {:2.0f}% ({})".format(prediction,
+                                100*np.max(output),
+                                true_label))
+
+    # plot the barplot
+    plt.subplot(1,2,2)
+
+    barplot = plt.bar(range(len(categories)), output, color="#777777")
+    plt.xticks(range(len(categories)), categories, rotation=90)
+
+    plt.ylim([0, 1])
+
+    barplot[np.argmax(output)].set_color('red')
+
+    plt.show()

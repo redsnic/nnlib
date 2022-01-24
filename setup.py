@@ -6,7 +6,7 @@ setuptools.setup(
    description='A library for basic nn stuff',
    author='Nicolò Rossi',
    author_email='olocin.issor@gmail.com',
-   install_requires=['wheel', 'pandas', 'numpy', 'tensorflow', 'matplotlib', 'cv2'],
+   install_requires=['wheel', 'pandas', 'numpy', 'tensorflow', 'matplotlib', 'opencv-python'],
    packages=setuptools.find_packages()
 )
 

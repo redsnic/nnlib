@@ -61,7 +61,7 @@ def categorize(model, categories, element, true_label=""):
     # plot the image
     plt.figure(figsize=(6,3))
     plt.subplot(1,2,1)
-
+ 
     plt.imshow(element, cmap=plt.cm.get_cmap("gray_r"))
     plt.xlabel("{} {:2.0f}% ({})".format(prediction,
                                 100*np.max(output),
